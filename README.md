@@ -49,7 +49,7 @@
 ### 使用方法
 
 * <a href="env_rename_me">.env_rename_me</a>ファイルをコピーして.envファイルを作成します。
-* <code>docker compose up -d</code>を実行して localhost:8080 で各APIを実行します。
+* <code>docker compose up -d</code>を実行して localhost:8080 に対して各APIを実行します。
   * もしくは、<a href="/build/app/Dockerfile">Dockerfile</a>の<code>CMD ["go", "run", "main.go"]</code>をコメントアウトして、下記コマンドで直接実行します。
      ```
      docker compose exec app go run main.go
