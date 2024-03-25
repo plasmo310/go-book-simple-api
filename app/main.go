@@ -1,11 +1,15 @@
 package main
 
 import (
-	"book-simple-api/db"
+	"book-simple-api/repository"
 	"book-simple-api/server"
 )
 
 func main() {
-	db.Init()
+	// Initialize.
+	repository.Init()
 	server.Init()
+
+	// Start listen server.
+	server.Listen()
 }

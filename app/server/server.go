@@ -1,26 +1,36 @@
 package server
 
 import (
-	"book-simple-api/controllers"
+	"book-simple-api/controller"
 	"github.com/gin-gonic/gin"
 )
 
+var router *gin.Engine
+
 func Init() {
-	r := CreateRouter()
-	err := r.Run(":8080")
+	router = CreateRouter(controller.GetAllRoutes())
+}
+
+func CreateRouter(routes controller.Routes) *gin.Engine {
+	r := gin.Default()
+	for _, route := range routes {
+		switch route.MethodType {
+		case controller.GET:
+			r.GET(route.Path, route.HandlerFunc)
+		case controller.POST:
+			r.POST(route.Path, route.HandlerFunc)
+		case controller.PUT:
+			r.PUT(route.Path, route.HandlerFunc)
+		case controller.DELETE:
+			r.DELETE(route.Path, route.HandlerFunc)
+		}
+	}
+	return r
+}
+
+func Listen() {
+	err := router.Run(":8080")
 	if err != nil {
 		panic(err)
 	}
-}
-
-func CreateRouter() *gin.Engine {
-	r := gin.Default()
-
-	bookController := controllers.BookController{}
-	r.GET("/books", bookController.Index)
-	r.POST("/books", bookController.Create)
-	r.PUT("/books/:id", bookController.Update)
-	r.DELETE("/books/:id", bookController.Delete)
-
-	return r
 }
